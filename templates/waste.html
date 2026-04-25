@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Waste Tracking</h3>
+
+<div class="card p-4 shadow bg-white col-md-6">
+<form method="POST">
+{% csrf_token %}
+<input name="name" class="form-control mb-2" placeholder="Food Item">
+<input name="qty" class="form-control mb-2" placeholder="Quantity">
+
+<select name="category" class="form-control mb-2">
+<option>Edible</option>
+<option>Inedible</option>
+</select>
+
+<button class="btn btn-danger w-100">Submit</button>
+</form>
+</div>
+
+{% endblock %}

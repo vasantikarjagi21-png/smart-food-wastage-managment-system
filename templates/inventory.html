@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Inventory Management</h3>
+
+<div class="row">
+
+<div class="col-md-5">
+<div class="card p-4 shadow bg-white">
+<form method="POST">
+{% csrf_token %}
+<input name="name" class="form-control mb-2" placeholder="Item Name">
+<input name="qty" class="form-control mb-2" placeholder="Quantity">
+<input type="date" name="exp" class="form-control mb-2">
+<button class="btn btn-warning w-100">Add Item</button>
+</form>
+</div>
+</div>
+
+<div class="col-md-7">
+<div class="card p-4 shadow bg-white">
+<h5>Items</h5>
+
+<table class="table">
+<tr><th>Name</th><th>Qty</th></tr>
+{% for i in items %}
+<tr>
+<td>{{ i.item_name }}</td>
+<td>{{ i.quantity }}</td>
+</tr>
+{% endfor %}
+</table>
+
+</div>
+</div>
+
+</div>
+
+{% endblock %}

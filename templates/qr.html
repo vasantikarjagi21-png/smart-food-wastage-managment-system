@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>QR Scanner</h3>
+
+<div class="card p-4 shadow bg-white col-md-6 text-center">
+
+<div id="reader"></div>
+
+<p class="mt-3"><b>Scanned:</b> <span id="result"></span></p>
+
+<button onclick="saveQR()" class="btn btn-dark">Save Scan</button>
+
+</div>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+let scanned = "";
+
+function onScanSuccess(text) {
+    scanned = text;
+    document.getElementById("result").innerText = text;
+}
+
+new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 })
+.render(onScanSuccess);
+
+function saveQR(){
+fetch('/save_qr/', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: JSON.stringify({code: scanned})
+}).then(()=>alert("Saved"));
+}
+</script>
+
+{% endblock %}

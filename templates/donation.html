@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>NGO Donation</h3>
+
+<div class="row">
+
+<div class="col-md-5">
+<div class="card p-4 shadow bg-white">
+<form method="POST">
+{% csrf_token %}
+<input name="ngo" class="form-control mb-2" placeholder="NGO Name">
+<input name="food" class="form-control mb-2" placeholder="Food Item">
+<button class="btn btn-info w-100">Request Pickup</button>
+</form>
+</div>
+</div>
+
+<div class="col-md-7">
+<div class="card p-4 shadow bg-white">
+<h5>Requests</h5>
+
+<table class="table">
+<tr><th>NGO</th><th>Food</th><th>Status</th></tr>
+
+{% for d in donations %}
+<tr>
+<td>{{ d.ngo_name }}</td>
+<td>{{ d.food_item }}</td>
+<td>{{ d.status }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+</div>
+
+</div>
+
+{% endblock %}

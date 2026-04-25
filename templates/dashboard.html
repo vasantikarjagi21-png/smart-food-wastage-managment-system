@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-4">Dashboard</h3>
+
+<div class="row">
+
+    <!-- Total Meals -->
+    <div class="col-md-4">
+        <div class="card shadow p-3 bg-white">
+            <h6>Total Meals</h6>
+            <h2>{{ meal_count }}</h2>
+        </div>
+    </div>
+
+    <!-- Total Waste -->
+    <div class="col-md-4">
+        <div class="card shadow p-3 bg-white">
+            <h6>Total Waste</h6>
+            <h2>{{ waste }}</h2>
+        </div>
+    </div>
+
+    <!-- Efficiency -->
+    <div class="col-md-4">
+        <div class="card shadow p-3 bg-white">
+            <h6>Efficiency</h6>
+            <h2>{{ efficiency }}%</h2>
+        </div>
+    </div>
+
+</div>
+
+<!-- ✅ NEW: Daily & Weekly -->
+<div class="row mt-3">
+
+    <div class="col-md-6">
+        <div class="card shadow p-3 bg-white">
+            <h6>Today's Meals</h6>
+            <h2>{{ today_meals }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow p-3 bg-white">
+            <h6>Weekly Meals</h6>
+            <h2>{{ weekly_meals }}</h2>
+        </div>
+    </div>
+
+</div>
+
+<hr>
+
+<!-- 📊 Chart -->
+<canvas id="chart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById("chart"), {
+    type: 'line',
+    data: {
+        labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+        datasets: [{
+            label: "Waste Trend",
+            data: [5,10,7,3,6,8,4],
+            fill: false
+        }]
+    }
+});
+</script>
+
+<hr>
+
+<!-- ✅ NEW: Meal Type Analysis -->
+<h4>Meal Analysis</h4>
+
+<table class="table table-bordered bg-white shadow">
+    <tr>
+        <th>Type</th>
+        <th>Total</th>
+        <th>Today</th>
+        <th>This Week</th>
+    </tr>
+
+    <tr>
+        <td>Breakfast</td>
+        <td>{{ breakfast_count }}</td>
+        <td>{{ today_breakfast }}</td>
+        <td>{{ week_breakfast }}</td>
+    </tr>
+
+    <tr>
+        <td>Lunch</td>
+        <td>{{ lunch_count }}</td>
+        <td>{{ today_lunch }}</td>
+        <td>{{ week_lunch }}</td>
+    </tr>
+
+    <tr>
+        <td>Dinner</td>
+        <td>{{ dinner_count }}</td>
+        <td>{{ today_dinner }}</td>
+        <td>{{ week_dinner }}</td>
+    </tr>
+</table>
+
+<hr>
+
+<!-- 🍽 Meal Records -->
+<h5 class="mt-4">Meal Records</h5>
+
+<table class="table table-bordered bg-white shadow">
+    <tr>
+        <th>User</th>
+        <th>Date</th>
+        <th>Meal Type</th>
+    </tr>
+
+    {% for meal in meals %}
+    <tr>
+        <td>{{ meal.user.email }}</td>
+        <td>{{ meal.date }}</td>
+        <td>{{ meal.meal_type }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">No meals found</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
