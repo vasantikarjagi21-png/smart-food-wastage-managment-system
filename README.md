@@ -1,0 +1,1 @@
+# smart-food-wastage-managment-system
